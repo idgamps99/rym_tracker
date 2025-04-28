@@ -1,0 +1,58 @@
+START:
+
+1. Build simple extension that detects when you visit RYM
+2. Set up backend endpoint to receieve data (i.e. how many visits to RYM)
+3. Use simple visualisation library to display very simple data
+4. Design DB that could store everything in WISHLIST
+
+
+LOOP OVER:
+For each item on WISHLIST
+  1. parse necessary DOM data
+  2. store in DB
+  3. Find simple ways to visualise
+
+
+TESTING:
+Claude suggestions:
+1. Automated Browser Testing
+  - Use tools like Playwright, Puppeteer, or Selenium to automate browser actions
+  - Script scenarios like "visit RYM pages, click around, check ratings"
+  - Verify that your extension correctly captures these scripted behaviors
+2. Mock Pages
+  - Create local HTML files that mimic RYM pages with known content
+  - Test your DOM parsing against these static files
+  - This lets you verify extraction logic works without hitting the actual site
+3. Event Testing
+  - Use Chrome's extension debugging tools to monitor events being fired
+  - Create test pages that trigger specific behaviors (rating changes, etc.)
+  - Verify events are captured correctly
+
+
+WISHLIST:
+
+1. Track RYM Usage
+  - how many vists
+  - how many tabs opened
+  - what time you're on it
+  - which artists (count each)
+  - which albums (count each)
+    - the year released
+    - the primary genres
+  - when you leave a rating and what the rating is
+  - when you change a rating (from what to what)
+  - which charts you look at the most
+
+2. Analyse data
+  - how many unique artists
+  - how many unique albums
+  - most visited artists
+  - most visited albums
+  - most popular years
+  - most popular decades
+  - most popular genres
+  - how often you leave a rating
+  - what your initial ratings
+
+3. Display data
+  - ???

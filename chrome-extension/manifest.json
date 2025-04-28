@@ -1,0 +1,19 @@
+{
+  "name": "RYM Tracker",
+  "description": "Track RYM usage",
+  "permissions": ["storage", "tabs", "activeTab"],
+  "version": "1.0",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "images/rymlogo.png"
+  },
+  "content_scripts": [
+    {
+      "js": ["scripts/content.js"],
+      "matches": [
+        "https://rateyourmusic.com/*"
+      ]
+    }
+  ]
+}
