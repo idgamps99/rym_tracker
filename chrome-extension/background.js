@@ -40,7 +40,6 @@ async function checkIfUniqueVisit() {
   return true
 }
 
-
 chrome.tabs.onUpdated.addListener(async (tabId, tab) => {
   console.log("tabs updated")
 
@@ -52,15 +51,3 @@ chrome.tabs.onUpdated.addListener(async (tabId, tab) => {
 
   await setOpenedTabsUrls()
 })
-
-
-// checkIfUniqueVisit:
-// get all previously opened URLs
-// iterate through and check if any include RYM
-
-// then in the onUpdated listener:
-// after the if statement:
-// set the previously opened urls
-//  - query all tabs
-//  - iterate through opened tabs and add to array
-//   - set array in local storage
