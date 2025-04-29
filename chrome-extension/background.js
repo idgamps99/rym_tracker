@@ -1,35 +1,66 @@
-// listen to tabs being created
-// if tab.url contains rateyourmusic
-// get local storage count: with default value of 0
-// increment count by 1
-// set new count in stoage
+async function getAllOpenTabs() {
+  return await chrome.tabs.query({})
+}
 
-// THEN
-// make sure that each visit is unique by checking other open tabs
-
-async function getUniqueVisits() {
-  const defaultVal = 0
-  const result = await chrome.storage.local.get("uniqueVisitsCount")
-  if (result.uniqueVisitsCount !== undefined) {
-    return result.uniqueVisitsCount
-  } else {
-    return defaultVal
-  }
+async function setOpenedTabsUrls() {
+  const tabs = await getAllOpenTabs()
+  const urls = tabs.map((tab) => tab.url)
+  await chrome.storage.local.set({ "urls": urls })
 }
 
 async function setUniqueVisits(visitsCount) {
-  await chrome.storage.local.set({ "uniqueVisitsCount": visitsCount})
+  await chrome.storage.local.set({ "uniqueVisitsCount": visitsCount })
 }
 
-chrome.tabs.onUpdated.addListener(async (tabId, tab) => {
-  if (tab.url && tab.url.includes("rateyourmusic.com")) {
-    // get local storage
-    // increment by 1
-    // set new counter in storage
-    let uniqueVisitsCount = await getUniqueVisits()
-    uniqueVisitsCount++
-    await setUniqueVisits(uniqueVisitsCount)
+async function getUniqueVisits() {
+  const result = await chrome.storage.local.get({"uniqueVisitsCount": 0 })
+  return result.uniqueVisitsCount
+}
+
+async function incrementUniqueVisit() {
+  console.log("Let's increment this shit")
+  let uniqueVisitsCount = await getUniqueVisits()
+  uniqueVisitsCount++
+  await setUniqueVisits(uniqueVisitsCount)
+}
+
+async function getOpenedTabsUrls() {
+  const res = await chrome.storage.local.get({ "urls": [] })
+  return res.urls
+}
+
+async function checkIfUniqueVisit() {
+  const urls = await getOpenedTabsUrls()
+  for(let i = 0; i < urls.length; i++) {
+    if (urls[i].includes("rateyourmusic.com")) {
+      console.log(urls[i])
+      return false
+    }
   }
+  return true
+}
+
+
+chrome.tabs.onUpdated.addListener(async (tabId, tab) => {
+  console.log("tabs updated")
+
+  if (tab.url && tab.url.includes("rateyourmusic.com")) {
+    const isUniqueVisit = await checkIfUniqueVisit()
+    console.log("Is Unique?", isUniqueVisit)
+    if (isUniqueVisit) await incrementUniqueVisit()
+  }
+
+  await setOpenedTabsUrls()
 })
 
 
+// checkIfUniqueVisit:
+// get all previously opened URLs
+// iterate through and check if any include RYM
+
+// then in the onUpdated listener:
+// after the if statement:
+// set the previously opened urls
+//  - query all tabs
+//  - iterate through opened tabs and add to array
+//   - set array in local storage
