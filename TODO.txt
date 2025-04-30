@@ -41,10 +41,12 @@ Claude suggestions:
 WISHLIST:
 
 1. Track RYM Usage
+  (DJANGO: VISITS APP)
   - how many vists - done
   - how many tabs opened
   - for both of above: track per day!
   - what time you're on it
+
   - which artists (count each)
   - which albums (count each)
     - the year released
