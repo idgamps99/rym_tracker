@@ -1,3 +1,5 @@
+import { API_KEY } from './config.js'
+
 async function getAllOpenTabs() {
   return await chrome.tabs.query({})
 }

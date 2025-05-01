@@ -1,8 +1,42 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+import os
+import json
+from datetime import datetime
+from django.utils import timezone
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse, JsonResponse
 from django.views import View
+from dotenv import load_dotenv
+from jsonschema import validate, ValidationError
+from .models import VisitsLog
+from .schemas import RECORD_VISIT_SCHEMA
 
 
-class UniqueVisitsView(View):
+load_dotenv()
+API_KEY = os.getenv("API_KEY")
+
+
+@method_decorator(csrf_exempt, name='dispatch')
+class RecordVisitView(View):
     def get(self, request):
         return HttpResponse("Hello world")
+
+
+    def post(self, request):
+        api_key = request.headers.get("x-api-key")
+        if api_key != API_KEY:
+            return JsonResponse({"error": "Incorrect API key provided"}, status=401)
+
+        try:
+            parsed_body = json.loads(request.body)
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Malformed JSON body"}, status=400)
+
+        try:
+            validate(instance=parsed_body, schema=RECORD_VISIT_SCHEMA)
+        except ValidationError as e:
+            return JsonResponse({"error": str(e)}, status=400)
+
+        timestamp = timezone.now()
+        VisitsLog.objects.create(is_unique=parsed_body["isUnique"], timestamp=timestamp)
+        return HttpResponse("Visit recorded", status=201)
