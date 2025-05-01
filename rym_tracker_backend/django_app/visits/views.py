@@ -1,6 +1,5 @@
 import os
 import json
-from datetime import datetime
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
@@ -39,4 +38,5 @@ class RecordVisitView(View):
 
         timestamp = timezone.now()
         VisitsLog.objects.create(is_unique=parsed_body["isUnique"], timestamp=timestamp)
+        print("hell yeah motherfucker")
         return HttpResponse("Visit recorded", status=201)
