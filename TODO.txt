@@ -1,17 +1,26 @@
-START:
+MVP Road Map:
 
-1. Build simple extension that detects when you visit RYM
-2. Set up backend endpoint to receieve data (i.e. how many visits to RYM)
-3. Use simple visualisation library to display very simple data
-4. Design DB that could store everything in WISHLIST
+1. Build chrome extenstion that tracks unique visits to RYM - done
+2. Build Django API
+3. Connect extension to Django API
+4. Design and migrate DB
+5. Use visualisation tools in v rudimentary way i.e. bar chart
+6. Render this on dev server
+7. Allow someone to create an account
+8. Link account to chrome extension
+9. Deploy to production!
 
 
+THEN:
 LOOP OVER:
 For each item on WISHLIST
   1. parse necessary DOM data
   2. store in DB
   3. Find simple ways to visualise
+  4. Deploy to production
 
+
+Track the day too!
 
 TESTING:
 Claude suggestions:
@@ -32,9 +41,12 @@ Claude suggestions:
 WISHLIST:
 
 1. Track RYM Usage
-  - how many vists
+  (DJANGO: VISITS APP)
+  - how many vists - done
   - how many tabs opened
+  - for both of above: track per day!
   - what time you're on it
+
   - which artists (count each)
   - which albums (count each)
     - the year released
