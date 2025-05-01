@@ -42,6 +42,32 @@ async function checkIfUniqueVisit() {
   return true
 }
 
+async function recordVisit(isUnique) {
+  const url = "http://127.0.0.1:8000/visits/record"
+  const body = {"isUnique": isUnique}
+
+  console.log("RECORDING VISIT!!!!")
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": API_KEY
+      },
+      body: JSON.stringify(body)
+    })
+
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+
+    console.log("RESPONSE:", response)
+
+  } catch (error) {
+    console.log("Couldn't record visit:", error)
+  }
+}
+
 chrome.tabs.onUpdated.addListener(async (tabId, tab) => {
   console.log("tabs updated")
 
@@ -49,7 +75,9 @@ chrome.tabs.onUpdated.addListener(async (tabId, tab) => {
     const isUniqueVisit = await checkIfUniqueVisit()
     console.log("Is Unique?", isUniqueVisit)
     if (isUniqueVisit) await incrementUniqueVisit()
+    await recordVisit(isUniqueVisit)
   }
 
   await setOpenedTabsUrls()
 })
+
