@@ -1,2 +1,6 @@
 rym_tracker_backend/django_app/.env
+rym_tracker_backend/django_app/visits/__pycache__
+rym_tracker_backend/django_app/rym_tracker/__pycache__
+rym_tracker_backend/django-env
 chrome_extension/config.js
+pseudocode.txt

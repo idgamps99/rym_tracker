@@ -11,6 +11,7 @@ from dotenv import load_dotenv
 from jsonschema import validate, ValidationError
 from .models import VisitsLog
 from .schemas import RECORD_VISIT_SCHEMA
+from .utils import plot_visits, validate_api_key
 
 
 load_dotenv()
@@ -21,11 +22,17 @@ API_KEY = os.getenv("API_KEY")
 class RecordVisitView(View):
     def get(self, request):
         template = loader.get_template("visits/summary.html")
-        context = {"name": "Myles"}
+        visits = VisitsLog.objects.all()
+        context = {
+            "name": "Myles",
+            "visits": visits,
+            "graph": plot_visits
+        }
         return HttpResponse(template.render(context))
 
 
     def post(self, request):
+        validate_api_key(request)
         api_key = request.headers.get("x-api-key")
         if api_key != API_KEY:
             return JsonResponse({"error": "Incorrect API key provided"}, status=401)

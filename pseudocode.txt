@@ -1,26 +1,3 @@
-1. when on RYM, print "hello RYM"
-
-what do we want to do?
- - increment counter when RYM is first opened
-
-how?
-  - keep track of open tabs?
-  - when navigated to a page with root URL
-    - check if another RYM tab is opened
-      - if yes
-        increment counter
-      - else if no
-        ignore
-
-we probably want the background job to keep track of open tabs
-- when navigated to rym page
-  - background job keeps track of open tabs
-  - listens to a new tab being opened
-    - IF RYM && no RYM tabs open
-      - increment counter
-
-how to check open tabs?
-  - get the tabs from storage
-    - initialise with default value of empty array if not
-
-do i need to keep track of all tabs? can't i just check if any RYM tabs open? 
+1. understand how to use matplotlib
+2. plot a simple graph using data from DB
+3. send data to template and visualise 
