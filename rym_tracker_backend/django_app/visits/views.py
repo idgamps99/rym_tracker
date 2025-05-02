@@ -1,10 +1,12 @@
 import os
 import json
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render
+from django.template import loader
 from django.utils import timezone
 from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponse, JsonResponse
 from django.views import View
+from django.views.decorators.csrf import csrf_exempt
 from dotenv import load_dotenv
 from jsonschema import validate, ValidationError
 from .models import VisitsLog
@@ -18,7 +20,9 @@ API_KEY = os.getenv("API_KEY")
 @method_decorator(csrf_exempt, name='dispatch')
 class RecordVisitView(View):
     def get(self, request):
-        return HttpResponse("Hello world")
+        template = loader.get_template("visits/summary.html")
+        context = {"name": "Myles"}
+        return HttpResponse(template.render(context))
 
 
     def post(self, request):
