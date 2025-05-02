@@ -1,9 +1,11 @@
 import os
+import json
 import base64
 from django.http import JsonResponse
 import matplotlib.pyplot as plt
 from io import BytesIO
 from dotenv import load_dotenv
+from jsonschema import validate, ValidationError
 
 
 load_dotenv()
@@ -14,10 +16,23 @@ def validate_api_key(request):
     api_key = request.headers.get("x-api-key")
     if api_key != API_KEY:
         return JsonResponse({"error": "Incorrect API key provided"}, status=401)
+    return None
+
+
+def parse_body(request):
+    try:
+        return json.loads(request.body), None
+    except json.JSONDecodeError:
+        return None, JsonResponse({"error": "Malformed JSON body"}, status=400)
 
 
 
-
+def validate_body(body, schema):
+    try:
+        validate(instance=body, schema=schema)
+    except ValidationError as e:
+        return JsonResponse({"error": str(e)}, status=400)
+    return None
 
 # MATPLOTLIB GRAPHS
 def get_graph():
