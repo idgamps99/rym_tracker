@@ -1,3 +1,8 @@
-1. understand how to use matplotlib
-2. plot a simple graph using data from DB
-3. send data to template and visualise 
+1. get data from only yesterday - done
+2. make data usable ?
+3. plot graph of all visits
+    - split into each hour
+    - count for each hour
+    - then display the counts for each hour 
+4. differentiate between different types of visits
+5. make graph labels more reasonable i.e. better timestamps

@@ -6,4 +6,4 @@ class VisitsLog(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"IsUnique: {self.is_unique}, Datetime: {self.timestamp}"
+        return f"is_unique: {self.is_unique}, timestamp: {self.timestamp}"
