@@ -1,4 +1,4 @@
-#!/home/mylesa/code/idgamps99/personal/rym_tracker/rym_tracker_backend/django-env/bin/python3
+#!/home/mylesa/code/idgamps99/personal/rym_tracker/rym_tracker_backend/django-env/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
